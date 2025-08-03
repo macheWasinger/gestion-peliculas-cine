@@ -1,0 +1,33 @@
+# Compilados de Java
+*.class
+
+# Archivos generados por NetBeans
+nbproject/private/
+build/
+dist/
+nbbuild/
+nball/
+nbdist/
+.nb-gradle/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+*~
+
+# Configs del IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Archivos de entorno
+.env
