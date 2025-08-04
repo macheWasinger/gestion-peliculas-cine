@@ -24,102 +24,105 @@ public class Cine {
 
     // LISTAR TODAS LAS PELÍCULAS
     public void listarPeliculas(Scanner sc) {
-        if (peliculas.size() > 0) {
-            System.out.println("\n--- Listar todas las películas ---");
-            MetodosAuxiliares.mostrarTituloDatosFormaTabulada();
+        if (peliculas.isEmpty()) {
+            MetodosAuxiliares.advertenciaListaVacia();
+            return;
+        }
 
-            for (Pelicula peli : peliculas) {
-                MetodosAuxiliares.mostrarDatosDeFormaTabulada(peli);
-            }
+        System.out.println("\n--- Listar todas las películas ---");
+        MetodosAuxiliares.mostrarTituloDatosFormaTabulada();
 
-            MetodosAuxiliares.imprimirSeparadores();
-            // OPCIÓN PARA MARCAR COMO NO DISPONIBLE
-            boolean marcarComoNoDisponible = MetodosAuxiliares.leerBooleano(sc, "¿Querés marcar alguna como no disponible? ");
+        for (Pelicula peli : peliculas) {
+            MetodosAuxiliares.mostrarDatosDeFormaTabulada(peli);
+        }
 
-            if (marcarComoNoDisponible) {
-                MetodosAuxiliares.mostrarPeliculasDeLaLista(peliculas);
-                int opcionElegida = MetodosAuxiliares.leerIntEntre(sc, "Elija una opción: ", 1, peliculas.size());
-                
-                for(int i = 0; i < peliculas.size(); i++) {
-                    if (i == (opcionElegida - 1)) {
-                        peliculas.get(i).setDisponible(false);
-                        System.out.println("Disponibilidad cambiada con éxito.");
-                    }
+        MetodosAuxiliares.imprimirSeparadores();
+        // OPCIÓN PARA MARCAR COMO NO DISPONIBLE
+        boolean marcarComoNoDisponible = MetodosAuxiliares.leerBooleano(sc, "¿Querés marcar alguna como no disponible? ");
+
+        if (marcarComoNoDisponible) {
+            MetodosAuxiliares.mostrarPeliculasDeLaLista(peliculas);
+            int opcionElegida = MetodosAuxiliares.leerIntEntre(sc, "Elija una opción: ", 1, peliculas.size());
+
+            for (int i = 0; i < peliculas.size(); i++) {
+                if (i == (opcionElegida - 1)) {
+                    peliculas.get(i).setDisponible(false);
+                    System.out.println("Disponibilidad cambiada con éxito.");
                 }
             }
-        } else {
-            MetodosAuxiliares.advertenciaListaVacia();
         }
 
     }
 
     // BUSCAR PELÍCULA POR TÍTULO
     public void buscarPorTitulo(Scanner sc) {
-        if (peliculas.size() > 0) {
-            System.out.println("\n--- Buscar películas por título ---");
-            String titulo = MetodosAuxiliares.solicitarEntradaNextLine(sc, "Ingrese un título: ", "título");
-
-            MetodosAuxiliares.mostrarTituloDatosFormaTabulada();
-            for (Pelicula peli : peliculas) {
-                if (MetodosAuxiliares.quitarTildes(peli.getTitulo().toLowerCase()).contains(MetodosAuxiliares.quitarTildes(titulo.toLowerCase()))) {
-                    MetodosAuxiliares.mostrarDatosDeFormaTabulada(peli);
-                }
-            }
-        } else {
+        if (peliculas.isEmpty()) {
             MetodosAuxiliares.advertenciaListaVacia();
+            return;
+        }
+
+        System.out.println("\n--- Buscar películas por título ---");
+        String titulo = MetodosAuxiliares.solicitarEntradaNextLine(sc, "Ingrese un título: ", "título");
+
+        MetodosAuxiliares.mostrarTituloDatosFormaTabulada();
+        for (Pelicula peli : peliculas) {
+            if (MetodosAuxiliares.quitarTildes(peli.getTitulo().toLowerCase()).contains(MetodosAuxiliares.quitarTildes(titulo.toLowerCase()))) {
+                MetodosAuxiliares.mostrarDatosDeFormaTabulada(peli);
+            }
         }
     }
 
     // MOSTRAR PELÍCULAS DISPONIBLES
     public void mostrarPeliculasDisponibles() {
-        if (peliculas.size() > 0) {
-            System.out.println("\n--- Mostrar todas las películas disponibles ---");
-
-            MetodosAuxiliares.mostrarTituloDatosFormaTabulada();
-            for (Pelicula peli : peliculas) {
-                if (peli.getDisponible() == true) {
-                    MetodosAuxiliares.mostrarDatosDeFormaTabulada(peli);
-                }
-            }
-        } else {
+        if (peliculas.isEmpty()) {
             MetodosAuxiliares.advertenciaListaVacia();
+            return;
+        }
+
+        System.out.println("\n--- Mostrar todas las películas disponibles ---");
+
+        MetodosAuxiliares.mostrarTituloDatosFormaTabulada();
+        for (Pelicula peli : peliculas) {
+            if (peli.getDisponible() == true) {
+                MetodosAuxiliares.mostrarDatosDeFormaTabulada(peli);
+            }
         }
 
     }
-    
+
     // MOSTRAR ESTADISTICAS
     public void mostrarEstadisticas() {
         Map<String, Integer> conteoPorGenero = new HashMap<>();
         int disponibles = 0;
         int noDisponibles = 0;
-        
-        if (peliculas.size() > 0) {
-            for (Pelicula peli : peliculas) {
-                // Contar por género
-                String genero = peli.getGenero().toLowerCase();
-                conteoPorGenero.put(genero, conteoPorGenero.getOrDefault(genero, 0) + 1);
-                
-                // Contar disponibilidad
-                if (peli.getDisponible()) {
-                    disponibles++;
-                } else {
-                    noDisponibles++;
-                }
-            }
-            
-            System.out.println("\n--- Estadísticas ---");
-            System.out.println("Películas por género: ");
-            for (String genero : conteoPorGenero.keySet()) {
-                System.out.println("- " + genero + ": " + conteoPorGenero.get(genero));
-            }
-            
-            System.out.println("\nDisponibilidad: ");
-            System.out.println("Disponibles: " + disponibles);
-            System.out.println("No disponibles: " + noDisponibles);
-                
-        } else {
+
+        if (peliculas.isEmpty()) {
             MetodosAuxiliares.advertenciaListaVacia();
+            return;
         }
+
+        for (Pelicula peli : peliculas) {
+            // Contar por género
+            String genero = peli.getGenero().toLowerCase();
+            conteoPorGenero.put(genero, conteoPorGenero.getOrDefault(genero, 0) + 1);
+
+            // Contar disponibilidad
+            if (peli.getDisponible()) {
+                disponibles++;
+            } else {
+                noDisponibles++;
+            }
+        }
+
+        System.out.println("\n--- Estadísticas ---");
+        System.out.println("Películas por género: ");
+        for (String genero : conteoPorGenero.keySet()) {
+            System.out.println("- " + genero + ": " + conteoPorGenero.get(genero));
+        }
+
+        System.out.println("\nDisponibilidad: ");
+        System.out.println("Disponibles: " + disponibles);
+        System.out.println("No disponibles: " + noDisponibles);
     }
 
     // GETTER Y SETTER
