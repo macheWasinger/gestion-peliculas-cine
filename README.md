@@ -49,6 +49,13 @@ El sistema está organizado en las siguientes clases:
 
 ```bash
 git clone https://github.com/tu-usuario/gestion-peliculas-cine.git
+```
+
+2. Abrilo con NetBeans o tu IDE de preferencia
+
+3. Ejecutá la clase Principal.java
+
+---
 
 ## 👤 Autor
 
